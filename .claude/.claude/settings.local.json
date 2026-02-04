@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find ../backend/routes -name \"*.py\" -exec grep -l \"chat\\\\|ai\\\\|message\\\\|conversation\" {} ;)",
+      "Bash(dir \"..\\\\..\\\\phase_02\" /b)",
+      "Bash(dir \"..\\\\..\\\\phase_02\\\\backend\" /b)",
+      "Bash(dir \"..\\\\..\\\\phase_02\\\\frontend\" /b)",
+      "Bash(dir \"D:\\\\heckathone_02\\\\phase_02\\\\frontend\\\\app\" /b)",
+      "Bash(dir \"D:\\\\heckathone_02\\\\phase_02\\\\frontend\\\\app\\\\tasks\" /b)",
+      "Bash(dir \"D:\\\\heckathone_02\\\\phase_02\\\\frontend\\\\components\" /b)",
+      "Bash(dir \"D:\\\\heckathone_02\\\\phase_02\\\\frontend\\\\components\\\\task\" /b)",
+      "Bash(dir)",
+      "Bash(dir .specify)",
+      "Bash(powershell \"Get-ChildItem -Path . -Force | Where-Object { $_Name -like ''.specify*'' }\")",
+      "Bash(powershell \"Get-ChildItem -Path . -Force | Where-Object {$_PSIsContainer -and $_Name -eq ''.specify''}\")",
+      "Bash(dir \".spec*\")",
+      "Bash(powershell \"Get-ChildItem -Path .specify -Force\")",
+      "Bash(powershell \"Get-ChildItem -Recurse -Directory | Where-Object {$_Name -eq ''.specify''}\")",
+      "Bash(powershell \"Get-ChildItem -Path . -Filter ''.specify'' -Recurse -Directory\")",
+      "Bash(cmd /c \"cd && dir\")",
+      "Bash(cmd /c \"cd ..\\\\.. && dir\")",
+      "Bash(cmd /c \"cd /d D:\\\\heckathone_02\\\\phase_03 && dir\")",
+      "Bash(dir backend)"
+    ]
+  }
+}
