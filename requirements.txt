@@ -1,0 +1,15 @@
+gradio
+google-generativeai
+fastapi
+uvicorn
+sqlmodel
+pydantic
+pydantic-settings
+python-multipart
+passlib[bcrypt]
+python-jose[cryptography]
+python-dotenv
+httpx
+psycopg2-binary
+requests
+pyjwt

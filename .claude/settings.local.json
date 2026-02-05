@@ -222,7 +222,16 @@
       "Bash(git init)",
       "Bash(git remote add origin https://github.com/Viky11992/heckathone_phase_03_todo_chatbot.git)",
       "Bash(git commit -m \"feat: Complete Todo AI Chatbot Implementation\n\n- Integrated Google Gemini API for natural language processing\n- Added chatbot functionality with task management\n- Implemented database migration from SQLite to Neon PostgreSQL\n- Added beautiful chat UI with light/dark mode support\n- Enhanced authentication and user session management\n- Created comprehensive chat history and AI action logging\n- Added natural language task recognition without explicit prefixes\n- Fixed all authentication and database issues\")",
-      "Bash(git push -u origin master)"
+      "Bash(git push -u origin master)",
+      "Bash(git commit -m \"fix: correct session_id parameter name in chat API call\n\n- Fixed TypeScript error where ''sessionId'' was used instead of ''session_id''\n- Ensured API parameter names match the backend expectations\n- Maintained all chat functionality while fixing the build error\")",
+      "Bash(git add vercel.json)",
+      "Bash(git commit -m \"chore: add vercel configuration for frontend deployment\n\n- Set rootDirectory to ''frontend'' for proper Next.js deployment\n- Added placeholder for NEXT_PUBLIC_API_BASE_URL environment variable\n- This configuration will allow Vercel to build the Next.js app correctly\")",
+      "Bash(python test_backend_connection.py)",
+      "Bash(curl -s https://vickey92-todo-chatbot.hf.space/api/chat)",
+      "Bash(python -m json.tool)",
+      "Bash(curl -X POST -H \"Content-Type: application/json\" -d '{\"\"message\"\":\"\"test\"\", \"\"session_id\"\":\"\"test\"\"}' https://vickey92-todo-chatbot.hf.space/api/chat)",
+      "Bash(python frontend_backend_integration_test.py)",
+      "Bash(python verify_db_connection.py)"
     ]
   }
 }

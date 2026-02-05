@@ -31,7 +31,7 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
 
         # Add Vercel deployment URLs
-        "https://heckathone-02-phase-02-todo-web-app.vercel.app",
+        "https://heckathone-phase-03-todo-chatbot-six.vercel.app",
         "https://*.vercel.app",
         # Add Hugging Face Space URL pattern
         "https://*.hf.space",
