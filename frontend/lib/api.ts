@@ -228,7 +228,7 @@ class ApiClient {
   // Task-related API methods
   async getTasks(userId: string, params?: { status?: string; priority?: string; category?: string; sort?: string; page?: number; limit?: number }) {
     const queryParams = new URLSearchParams();
-    if (params?.status) queryParams.append('status', params.status);
+    if (params?.status) queryParams.append('status_filter', params.status);
     if (params?.priority) queryParams.append('priority_filter', params.priority);
     if (params?.category) queryParams.append('category_filter', params.category);
     if (params?.sort) queryParams.append('sort', params.sort);
