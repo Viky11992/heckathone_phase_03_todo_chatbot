@@ -237,7 +237,10 @@
       "Bash(git checkout -b master)",
       "Bash(git merge main)",
       "Bash(git push origin --delete main)",
-      "Bash(git add .claude/settings.local.json)"
+      "Bash(git add .claude/settings.local.json)",
+      "Bash(git commit -m \"chore: update claude settings\")",
+      "Bash(git branch -D main)",
+      "Bash(git commit -m \"chore: update claude settings tracking\")"
     ]
   }
 }
