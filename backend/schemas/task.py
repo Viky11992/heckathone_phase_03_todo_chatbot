@@ -7,6 +7,7 @@ from enum import Enum
 class TaskStatus(str, Enum):
     PENDING = "pending"
     COMPLETED = "completed"
+    ALL = "all"
 
 
 class TaskBase(BaseModel):
@@ -160,7 +161,7 @@ class TaskFilterParams(BaseModel):
     """
     Schema for task filtering parameters
     """
-    status: Optional[TaskStatus] = "all"
+    status: Optional[TaskStatus] = TaskStatus.ALL
     sort: Optional[str] = "created"
     page: Optional[int] = 1
     limit: Optional[int] = 20

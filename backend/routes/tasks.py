@@ -16,7 +16,7 @@ router = APIRouter()
 @router.get("/{user_id}/tasks", response_model=task_schemas.TaskListResponse)
 async def list_tasks(
     user_id: str,
-    status_filter: task_schemas.TaskStatus = "all",
+    status_filter: task_schemas.TaskStatus = task_schemas.TaskStatus.ALL,
     priority_filter: str = "all",
     category_filter: str = "all",
     sort: str = "created",
@@ -31,11 +31,14 @@ async def list_tasks(
     # Verify that the user can only access their own tasks
     verify_user_access(current_user_id, user_id)
 
+    # Convert enum to string for backward compatibility with the service layer
+    status_filter_str = status_filter.value if hasattr(status_filter, 'value') else status_filter
+
     # Use service to get tasks
     tasks = TaskService.get_tasks_for_user(
         session=session,
         user_id=user_id,
-        status_filter=status_filter,
+        status_filter=status_filter_str,
         priority_filter=priority_filter,
         category_filter=category_filter,
         sort_by=sort,
