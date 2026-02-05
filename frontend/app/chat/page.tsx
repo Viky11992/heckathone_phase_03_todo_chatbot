@@ -106,7 +106,7 @@ const ChatPage = () => {
       // Send message to backend
       const response = await sendChatMessage({
         message: inputMessage,
-        sessionId: sessionId || undefined,
+        session_id: sessionId || undefined,
       });
 
       if (response.success) {
