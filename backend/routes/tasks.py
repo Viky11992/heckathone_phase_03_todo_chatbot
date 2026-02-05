@@ -32,7 +32,7 @@ async def list_tasks(
     verify_user_access(current_user_id, user_id)
 
     # Convert enum to string for backward compatibility with the service layer
-    status_filter_str = status_filter.value if hasattr(status_filter, 'value') else status_filter
+    status_filter_str = status_filter.value if isinstance(status_filter, task_schemas.TaskStatus) else status_filter
 
     # Use service to get tasks
     tasks = TaskService.get_tasks_for_user(
