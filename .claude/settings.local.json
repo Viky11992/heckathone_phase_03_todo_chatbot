@@ -242,7 +242,9 @@
       "Bash(git branch -D main)",
       "Bash(git commit -m \"chore: update claude settings tracking\")",
       "Bash(curl -X POST -H \"Content-Type: application/json\" -d '{\"\"user_id\"\":\"\"test\"\", \"\"email\"\":\"\"test@example.com\"\", \"\"name\"\":\"\"Test User\"\"}' https://vickey92-todo-chatbot.hf.space/api/auth/generate-token)",
-      "Bash(node test_auth_url.js)"
+      "Bash(node test_auth_url.js)",
+      "Bash(git commit -m \"fix: resolve auth endpoint 404 error by improving URL construction logic\n\n- Update auth service to properly construct API URLs with or without /api suffix\n- Ensure auth endpoints work correctly with backend route configuration\n- Fix generate-token and validate-token endpoint access\n- Both frontend API client and auth service now properly aligned with backend routing\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")",
+      "Bash(curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLVlXSmpRR2R0WVdsc0xtTnZiUSIsIm5hbWUiOiJhYmMiLCJlbWFpbCI6ImFiY0BnbWFlsLmNvbSIsJleHAiOjE3NzI4NTM1NTN9.v_ytn2Maqeg750QO4oGZZh_4ITD66gaatqpmmXo1VG0\" https://vickey92-todo-chatbot.hf.space/api/user-YWJjQGdtYWlsLmNvbQ/tasks?status=all)"
     ]
   }
 }

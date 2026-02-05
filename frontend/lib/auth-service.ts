@@ -17,6 +17,28 @@ const getAuthApiUrl = (): string => {
   }
 };
 
+// Helper function to decode JWT token and extract user ID
+const extractUserIdFromToken = (token: string): string | null => {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      return null;
+    }
+
+    // Decode the payload (second part)
+    const payload = parts[1];
+    // Add padding if needed
+    const paddedPayload = payload + '='.repeat((4 - payload.length % 4) % 4);
+    const decodedPayload = atob(paddedPayload);
+    const parsedPayload = JSON.parse(decodedPayload);
+
+    return parsedPayload.sub || null;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
+};
+
 class AuthService {
   // Generate a new JWT token from the backend
   async generateToken(userData: { user_id: string; email?: string; name?: string }) {
@@ -65,6 +87,19 @@ class AuthService {
       console.error('Error validating token:', error);
       return { success: false };
     }
+  }
+
+  // Get the current user ID from the token (fallback to localStorage if token is not available)
+  getCurrentUserId(): string | null {
+    const token = this.getAuthToken();
+    if (token) {
+      const userId = extractUserIdFromToken(token);
+      if (userId) {
+        return userId;
+      }
+    }
+    // Fallback to localStorage if token is not available or can't be decoded
+    return this.getUserId();
   }
 
   // Store token and user data in localStorage

@@ -62,7 +62,9 @@ class ApiClient {
 
           if (tokenResponse.success && tokenResponse.token) {
             token = tokenResponse.token;
-            authService.setAuthData(token as string, userId, userEmail || '');
+            // Always use the user_id returned by the backend to ensure consistency
+            const returnedUserId = tokenResponse.user_id || userId;
+            authService.setAuthData(token as string, returnedUserId, userEmail || '');
           }
         } catch (error) {
           console.error('Failed to generate token:', error);
@@ -80,7 +82,9 @@ class ApiClient {
 
           if (tokenResponse.success && tokenResponse.token) {
             token = tokenResponse.token;
-            authService.setAuthData(token as string, newUserId, userEmail || '');
+            // Always use the user_id returned by the backend to ensure consistency
+            const returnedUserId = tokenResponse.user_id || newUserId;
+            authService.setAuthData(token as string, returnedUserId, userEmail || '');
           }
         } catch (error) {
           console.error('Failed to generate token:', error);
@@ -115,18 +119,31 @@ class ApiClient {
           const validation = await authService.validateToken(currentToken);
           if (!validation.success) {
             // Token is invalid, clear it and try to generate a new one
+            const userEmail = localStorage.getItem('user_email');
             authService.clearAuthData();
 
-            // Generate a new token with the current user ID or a default one
-            const userId = authService.getUserId() || `user-${Date.now()}`;
+            // Generate a new token with the current user ID or derive from email if available
+            let userId = authService.getUserId();
+
+            // If no stored user ID but we have email, create one consistently
+            if (!userId && userEmail) {
+              userId = `user-${btoa(userEmail).replace(/[^a-zA-Z0-9]/g, '')}`;
+            }
+            // If still no user ID, create a generic one (though this shouldn't happen in normal flow)
+            else if (!userId) {
+              userId = `user-${Date.now()}`;
+            }
+
             const tokenResponse = await authService.generateToken({
               user_id: userId,
-              email: localStorage.getItem('user_email') || `${userId}@example.com`,
-              name: `User ${userId}`
+              email: userEmail || `${userId}@example.com`,
+              name: userEmail ? userEmail.split('@')[0] : `User ${userId}`
             });
 
             if (tokenResponse.success && tokenResponse.token) {
-              authService.setAuthData(tokenResponse.token as string, userId, localStorage.getItem('user_email') || `${userId}@example.com`);
+              // Use the user_id returned by the backend to ensure consistency
+              const returnedUserId = tokenResponse.user_id || userId;
+              authService.setAuthData(tokenResponse.token as string, returnedUserId, userEmail || `${returnedUserId}@example.com`);
 
               // Retry the request with the new token
               const retryHeaders = {
