@@ -240,7 +240,9 @@
       "Bash(git add .claude/settings.local.json)",
       "Bash(git commit -m \"chore: update claude settings\")",
       "Bash(git branch -D main)",
-      "Bash(git commit -m \"chore: update claude settings tracking\")"
+      "Bash(git commit -m \"chore: update claude settings tracking\")",
+      "Bash(curl -X POST -H \"Content-Type: application/json\" -d '{\"\"user_id\"\":\"\"test\"\", \"\"email\"\":\"\"test@example.com\"\", \"\"name\"\":\"\"Test User\"\"}' https://vickey92-todo-chatbot.hf.space/api/auth/generate-token)",
+      "Bash(node test_auth_url.js)"
     ]
   }
 }

@@ -3,11 +3,26 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
+// Ensure the API base URL ends with '/api' for auth endpoints compatibility
+// The backend auth routes are under /api/auth/* so we need to ensure the proper path structure
+const getAuthApiUrl = (): string => {
+  const baseUrl = API_BASE_URL;
+  // Check if the base URL already ends with '/api' (common in dev) or not (common in deployed version)
+  if (baseUrl.endsWith('/api')) {
+    return baseUrl; // Already correct format like https://.../api
+  } else {
+    // If it doesn't end with /api, we need to add it for auth endpoints
+    // because backend routes are configured as app.include_router(auth.router, prefix="/api", ...)
+    return baseUrl + '/api';
+  }
+};
+
 class AuthService {
   // Generate a new JWT token from the backend
   async generateToken(userData: { user_id: string; email?: string; name?: string }) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/generate-token`, {
+      const authApiUrl = getAuthApiUrl();
+      const response = await fetch(`${authApiUrl}/auth/generate-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +46,8 @@ class AuthService {
   // Validate an existing token with the backend
   async validateToken(token: string) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/validate-token`, {
+      const authApiUrl = getAuthApiUrl();
+      const response = await fetch(`${authApiUrl}/auth/validate-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
