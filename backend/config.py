@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     # Better Auth settings
     better_auth_secret: str = os.getenv("BETTER_AUTH_SECRET", "your-better-auth-secret-key")
 
+    # Google Gemini settings
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
+
     # Application settings
     app_name: str = "Todo API"
     app_version: str = "1.0.0"

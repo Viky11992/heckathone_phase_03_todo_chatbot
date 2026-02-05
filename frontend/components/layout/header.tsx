@@ -29,6 +29,9 @@ export default function Header() {
               <Link href="/tasks" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 My Tasks
               </Link>
+              <Link href="/chat" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+                AI Assistant
+              </Link>
               <Link href="/profile" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 Profile
               </Link>
@@ -105,6 +108,13 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   My Tasks
+                </Link>
+                <Link
+                  href="/chat"
+                  className="block py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  AI Assistant
                 </Link>
                 <Link
                   href="/profile"

@@ -1,9 +1,10 @@
-from sqlmodel import SQLModel, Field, create_engine, Session
+from sqlmodel import SQLModel, Field, create_engine, Session, Relationship
 from typing import Optional
 from datetime import datetime
 import os
 from enum import Enum
 from passlib.context import CryptContext
+import uuid
 
 
 class TaskStatus(str, Enum):
@@ -57,3 +58,52 @@ class Task(SQLModel, table=True):
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
+
+
+# Chat Models
+class ChatSessionBase(SQLModel):
+    user_id: str = Field(index=True)
+
+
+class ChatSession(ChatSessionBase, table=True):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+    # Relationships to messages
+    messages: Optional[list["ChatMessage"]] = Relationship(back_populates="session")
+
+
+class ChatMessageBase(SQLModel):
+    user_id: str = Field(index=True)
+    session_id: str = Field(index=True, foreign_key="chatsession.id")
+    role: str = Field(index=True)  # 'user' or 'assistant'
+    content: str
+
+
+class ChatMessage(ChatMessageBase, table=True):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    # Relationship to session
+    session: Optional["ChatSession"] = Relationship(back_populates="messages")
+
+
+class AiActionLogBase(SQLModel):
+    user_id: str = Field(index=True)
+    session_id: str = Field(index=True, foreign_key="chatsession.id")
+    action_type: str = Field(index=True)  # 'add_task', 'list_tasks', etc.
+    request_params: str  # JSON string of the parameters passed
+    result: str  # JSON string of the result
+
+
+class AiActionLog(AiActionLogBase, table=True):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+    # Relationship to session
+    session: Optional["ChatSession"] = Relationship()
+
+
+# Add relationship to ChatSession
+ChatSession.model_rebuild()

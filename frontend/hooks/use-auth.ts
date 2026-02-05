@@ -6,6 +6,7 @@ import { authService } from '@/lib/auth-service';
 
 interface AuthContextType {
   user: User | null;
+  isAuthenticated: boolean;
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
@@ -215,6 +216,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const authValue = {
     user,
+    isAuthenticated: !!user,
     isLoading,
     signIn,
     signUp,

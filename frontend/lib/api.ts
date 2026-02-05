@@ -2,7 +2,7 @@ import { TaskResponse, TaskCreate, TaskUpdate, TaskToggleComplete } from './type
 import { authService } from './auth-service';
 
 // Base API URL from environment or default
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://vickey92-todo-backend.hf.space/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 // API client class to handle all API requests
 class ApiClient {
@@ -271,9 +271,41 @@ class ApiClient {
       body: JSON.stringify({ image }),
     });
   }
+
+  // Chat-related API methods
+  async sendChatMessage(messageData: { message: string; session_id?: string }) {
+    return this.makeRequest('/chat', {
+      method: 'POST',
+      body: JSON.stringify(messageData),
+    });
+  }
+
+  async getChatHistory(sessionId: string) {
+    return this.makeRequest(`/chat/history/${sessionId}`, {
+      method: 'GET',
+    });
+  }
+
+  async getUserSessions() {
+    return this.makeRequest('/chat/sessions', {
+      method: 'GET',
+    });
+  }
+
+  async clearChatHistory(sessionId: string) {
+    return this.makeRequest(`/chat/clear/${sessionId}`, {
+      method: 'DELETE',
+    });
+  }
 }
 
 // Export a singleton instance of the API client
 export const api = new ApiClient();
+
+// Export helper functions for easier usage
+export const sendChatMessage = api.sendChatMessage.bind(api);
+export const getChatHistory = api.getChatHistory.bind(api);
+export const getUserSessions = api.getUserSessions.bind(api);
+export const clearChatHistory = api.clearChatHistory.bind(api);
 
 export default api;

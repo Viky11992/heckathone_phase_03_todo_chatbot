@@ -2,9 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from database import engine
-import models
+from models import SQLModel, User, Task, ChatSession, ChatMessage, AiActionLog
 from config import settings
-from routes import tasks, auth, users
+from routes import tasks, auth, users, chat
 from sqlmodel import SQLModel
 import logging
 
@@ -45,6 +45,7 @@ app.add_middleware(
 app.include_router(tasks.router, prefix="/api", tags=["tasks"])
 app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(users.router, prefix="/api", tags=["users"])
+app.include_router(chat.router, prefix="", tags=["chat"])
 
 # Root endpoint
 @app.get("/")

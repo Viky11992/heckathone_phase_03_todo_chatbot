@@ -19,7 +19,15 @@ export default function SignInForm() {
 
     try {
       await signIn(email, password);
-      router.push('/tasks');
+
+      // Check if there's a redirect URL in the query params or in sessionStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectUrl = urlParams.get('redirect') || sessionStorage.getItem('redirectAfterAuth') || '/chat';
+
+      // Clear the stored redirect URL
+      sessionStorage.removeItem('redirectAfterAuth');
+
+      router.push(redirectUrl);
     } catch (err: any) {
       setError(err.message || 'An error occurred during sign in');
       console.error('Sign in error:', err);

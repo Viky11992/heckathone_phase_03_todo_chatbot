@@ -9,7 +9,7 @@ import os
 # Add the backend directory to the path so we can import our models
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from models import Task  # Import your models
+from models import Task, ChatSession, ChatMessage, AiActionLog  # Import your models
 from config import settings
 
 # this is the Alembic Config object, which provides
