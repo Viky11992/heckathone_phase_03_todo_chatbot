@@ -1,0 +1,7 @@
+{
+  "framework": "nextjs",
+  "rootDirectory": "frontend",
+  "env": {
+    "NEXT_PUBLIC_API_BASE_URL": "https://your-backend-url/api"
+  }
+}
